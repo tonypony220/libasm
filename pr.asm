@@ -21,11 +21,11 @@
 	; assembler directive or a pseudo opcode (pseudo-op)
 	; This pseudo-op informs the assembler that the label _start 
 	; is to be made known to the linker program when the program is linked.
-	global _start  
+	global start  
 
 ; label. Since no code has been generated up to this point, 
 ; the label refers to location 0 of the program's text segment.
-_start:  
+start:  
 	; symbolic opcodes
 	mov eax,1  ;1 is the exit sys call number
 	mov ebx,5  ;the status value to return 
