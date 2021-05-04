@@ -102,6 +102,16 @@ main:
  	setc dl; rdx <-- 
 
 ; CONDITIONS 
+	cmp a, b 
+	jl  ; (a <  b) SF != OF 		   LESS 
+	jle ; (a <= b) SF != OF && ZF == 1 LESS OR EQUAL  
+	jg	; (a >  b) SF == OF && ZF 	   GREATER 
+	jge	; (a => b) SF == OF 		   GREATER OR EQUAL
+	
+	jb  ; (a <  b) CF == 1 		  	   BELOW 
+	jbe ; (a <= b) CF == 1 && ZF == 1  BELOW OR EQUAL  
+	ja	; (a >  b) CF == 0 && ZF == 0  ABOVE 
+	jae	; (a => b) CF == 0 &&          ABOVE OR EQUAL
 
 
 
