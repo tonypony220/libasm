@@ -9,9 +9,10 @@
 ; MEMORY  
 section .bss
 	string  resb 20   ; 				 1 byte * 20
-    count   resw 256  ; 	   1 word => 2 byte * 256
+    count   resw 256  ; 	   1 word => 2 byte * 256  minimal size able to push to stack
     x       resd 1    ; 1 double word => 4 byte * 1
 					  ; 	quad word -> 8
+
 section .data
 	b db 200	
 	a dq 151
@@ -103,6 +104,10 @@ main:
 
 ; CONDITIONS 
 	cmp a, b 
+
+	je  ; (a == b) ZF == 1 			   EQUAL
+	jne ; (a 1= b) ZF == 0 			   EQUAL
+
 	jl  ; (a <  b) SF != OF 		   LESS 
 	jle ; (a <= b) SF != OF && ZF == 1 LESS OR EQUAL  
 	jg	; (a >  b) SF == OF && ZF 	   GREATER 
@@ -113,6 +118,11 @@ main:
 	ja	; (a >  b) CF == 0 && ZF == 0  ABOVE 
 	jae	; (a => b) CF == 0 &&          ABOVE OR EQUAL
 
+; STACK
+	push bx	; puts bx in stack and ESP + bx (pointer increase)
+	pop	 bx ; get bx from stack and ESP - bx (pointer decrease)
+
+	mov eax, [esp]  ; esp copy from top of stack and that is it
 
 
 
