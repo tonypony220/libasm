@@ -9,3 +9,6 @@
 nasm -fmacho64 hello.o
 
 ld -macosx_version_min 10.7.0 -lSystem hello.o
+
+# gcc -S  -mllvm --x86-asm-syntax=intel err.c -o err.s
+# or clang
