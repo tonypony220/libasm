@@ -105,18 +105,18 @@ main:
 ; CONDITIONS 
 	cmp a, b 
 
-	je  ; (a == b) ZF == 1 			   EQUAL
-	jne ; (a 1= b) ZF == 0 			   EQUAL
+	je  jz 	; (a == b) ZF == 1 			   EQUAL
+	jne jnz	; (a 1= b) ZF == 0 			   EQUAL
 
-	jl  ; (a <  b) SF != OF 		   LESS 
-	jle ; (a <= b) SF != OF && ZF == 1 LESS OR EQUAL  
-	jg	; (a >  b) SF == OF && ZF 	   GREATER 
-	jge	; (a => b) SF == OF 		   GREATER OR EQUAL
+	jl  	; (a <  b) SF != OF 		   LESS 
+	jle 	; (a <= b) SF != OF && ZF == 1 LESS OR EQUAL  
+	jg 	jnle; (a >  b) SF == OF && ZF 	   GREATER 
+	jge	jnl	; (a => b) SF == OF 		   GREATER OR EQUAL
 	
-	jb  ; (a <  b) CF == 1 		  	   BELOW 
-	jbe ; (a <= b) CF == 1 && ZF == 1  BELOW OR EQUAL  
-	ja	; (a >  b) CF == 0 && ZF == 0  ABOVE 
-	jae	; (a => b) CF == 0 &&          ABOVE OR EQUAL
+	jb  	; (a <  b) CF == 1 		  	   BELOW 
+	jbe 	; (a <= b) CF == 1 && ZF == 1  BELOW OR EQUAL  
+	ja		; (a >  b) CF == 0 && ZF == 0  ABOVE 
+	jae		; (a => b) CF == 0 &&          ABOVE OR EQUAL
 
 ; STACK
 	push bx	; puts bx in stack and ESP + bx (pointer increase)
@@ -124,10 +124,30 @@ main:
 
 	mov eax, [esp]  ; esp copy from top of stack and that is it
 
+; STACK FRAME 
+somefunction:
 
+	push ebp  ;	saving pointer from call
+	mov ebp, esp  ; saving top stack pointer to current ebp. ebp used to achinve params or func vars;
+	sub esp, 16 ;  reserving 16 
+	; this 3 command equals 
+	enter 16, 0 
+	; code...
+	mov esp, ebp  ;
+	pop ebp ; returns seved stack pointer to calling function
+	ret  ;
+	; this 3 commands equals 
+	leave
+		
+;	CONVENTIONS 
+; PASSING PARAMS:
+; For integers and pointers 
+	rdi, rsi, rdx, rcx, r8, r9.
+;For floating-point (float, double), 
+	xmm0, xmm1, xmm2, xmm3, xmm4, xmm5, xmm6, xmm7.
 
-
-
+;the CALLE-SAVE REGISTERS ARE: 
+	rbp, rbx, r12, r13, r14, r15
 
 
 
