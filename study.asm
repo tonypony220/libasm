@@ -122,6 +122,7 @@ main:
  	setc dl; rdx <-- 
 
 ; CONDITIONS 
+	; CF == carry flag
 	cmp a, b 
 
 	je  jz 	; (a == b) ZF == 1 			   EQUAL
@@ -132,10 +133,11 @@ main:
 	jg 	jnle; (a >  b) SF == OF && ZF 	   GREATER 
 	jge	jnl	; (a => b) SF == OF 		   GREATER OR EQUAL
 	
-	jb  	; (a <  b) CF == 1 		  	   BELOW 
+	jb  jc  ; (a <  b) CF == 1 		  	   BELOW 
 	jbe 	; (a <= b) CF == 1 && ZF == 1  BELOW OR EQUAL  
 	ja		; (a >  b) CF == 0 && ZF == 0  ABOVE 
-	jae		; (a => b) CF == 0 &&          ABOVE OR EQUAL
+	jae jnc	; (a => b) CF == 0 &&          ABOVE OR EQUAL
+
 
 ; STACK
 	push bx	; puts bx in stack and ESP + bx (pointer increase)
