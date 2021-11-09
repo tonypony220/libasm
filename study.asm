@@ -6,16 +6,35 @@
 ;  1 bytes 8  bit                                                                         AH  CH  DH  BH  <- high  [AH and AL => AX]
 ; 16 bytes 128bit  XMM0 ... XMM15
 
+ ax ; accumulator for numeric operations  : return value
+ bx ; base register ( array access)
+ ex ; count register (string operations) 
+ dx ; data register
+ si ; source index       : used for moving data from one arr to another
+ di ; destination index  : ^
+ bp ; base pointer (for function frames) : store current stack pointer and users for args [bp - 4] and for function params [bp + 4] etc.
+ sp ; stack pointer : points always on stack 
+ ip ; (eip)extended instruction pointer : store adress in RAM of next machine command to execute; eip += len(command) :: return control
+ flags ; flags 
+ 	; zf - zero 
+	; cf - carry flag  
+	; sf - sign
+	; of - overflow
 ; MEMORY  
+section .text ; stores code
+section .data ; stores initialized vars
+section .bss  ; stores not initialized vars and can be expanded
+; example
 section .bss
 	string  resb 20   ; 				 1 byte * 20
     count   resw 256  ; 	   1 word => 2 byte * 256  minimal size able to push to stack
     x       resd 1    ; 1 double word => 4 byte * 1
-					  ; 	quad word -> 8
-
+					  ; 	quad word => 8 byte 
 section .data
 	b db 200	
 	a dq 151
+	fibon dw 1, 1, 2, 3, 5, 8, 13, 21
+
 ; MOVE
 	; same result: extends to 8 bits when eax (4 bytes)
 	mov rax, 100 
@@ -148,8 +167,6 @@ somefunction:
 
 ;the CALLE-SAVE REGISTERS ARE: 
 	rbp, rbx, r12, r13, r14, r15
-
-
 
 
 
